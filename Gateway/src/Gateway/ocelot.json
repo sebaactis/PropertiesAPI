@@ -1,0 +1,31 @@
+{
+    "Routes": [
+      {
+        "DownstreamPathTemplate": "/api/{everything}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "propertiesApi",
+            "Port": 80
+          }
+        ],
+        "UpstreamPathTemplate": "/api/{everything}",
+        "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+      },
+      {
+        "DownstreamPathTemplate": "/auth/{everything}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "authservice",
+            "Port": 5000
+          }
+        ],
+        "UpstreamPathTemplate": "/auth/{everything}",
+        "UpstreamHttpMethod": [ "POST"]
+      }
+    ],
+    "GlobalConfiguration": {
+      "BaseUrl": "http://localhost:5002"
+    }
+}

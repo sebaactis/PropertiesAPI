@@ -1,0 +1,74 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Carp1910@
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - app-network
+  
+  propertiesApi:
+    image: properties_api
+    build:
+      context: ./PropertiesAPI/src     
+      dockerfile: Properties.API/Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=PropertyDB;User Id=sa;Password=Carp1910@;TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+    networks:
+      - app-network
+ 
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Carp1910@
+      POSTGRES_DB: IdentityDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  authservice:
+    image: authservice
+    build:
+      context: ./AuthService/src
+      dockerfile: AuthService/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=IdentityDB;Username=postgres;Password=Carp1910@;
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  gateway:
+    image: gateway
+    build:
+      context: ./Gateway/src
+      dockerfile: Gateway/Dockerfile
+    ports:
+      - "5002:90"
+    depends_on:
+      - propertiesApi
+      - authservice 
+    networks:
+      - app-network
+
+volumes:
+  sqlserver-data:
+  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge
