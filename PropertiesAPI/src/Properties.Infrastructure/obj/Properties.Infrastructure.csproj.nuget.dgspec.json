@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Infrastructure\\Properties.Infrastructure.csproj": {}
+    "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Infrastructure\\Properties.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj": {
+    "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj",
+        "projectUniqueName": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj",
         "projectName": "Properties.Core",
-        "projectPath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj",
+        "projectPath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj",
         "packagesPath": "C:\\Users\\Seba\\.nuget\\packages\\",
-        "outputPath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Core\\obj\\",
+        "outputPath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -50,6 +50,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.11.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -70,14 +76,14 @@
         }
       }
     },
-    "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Infrastructure\\Properties.Infrastructure.csproj": {
+    "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Infrastructure\\Properties.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Infrastructure\\Properties.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Infrastructure\\Properties.Infrastructure.csproj",
         "projectName": "Properties.Infrastructure",
-        "projectPath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Infrastructure\\Properties.Infrastructure.csproj",
+        "projectPath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Infrastructure\\Properties.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Seba\\.nuget\\packages\\",
-        "outputPath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Infrastructure\\obj\\",
+        "outputPath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -99,8 +105,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj": {
-                "projectPath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj"
+              "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj": {
+                "projectPath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj"
               }
             }
           }
@@ -134,6 +140,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.3, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[9.0.4, )"
             }
           },
           "imports": [

@@ -8,7 +8,7 @@ namespace Properties.Core.Interfaces
 {
     public interface IPropertyService
     {
-        Task<IEnumerable<Property>> GetAllPropertiesAsync();
+        PagedList<Property> GetAllPropertiesAsync(PropertyQueryParams queryParams);
         Task<Property> GetPropertyByIdAsync(int id);
         Task AddPropertyAsync(Property property);
         Task UpdatePropertyAsync(Property property);

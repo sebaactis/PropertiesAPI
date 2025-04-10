@@ -9,3 +9,16 @@ D:\Descargas\Seba\Proyects\C#\MicroserviceProyect\PropertiesAPI\src\Properties.C
 D:\Descargas\Seba\Proyects\C#\MicroserviceProyect\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\refint\Properties.Core.dll
 D:\Descargas\Seba\Proyects\C#\MicroserviceProyect\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\Properties.Core.pdb
 D:\Descargas\Seba\Proyects\C#\MicroserviceProyect\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\ref\Properties.Core.dll
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\bin\Debug\net9.0\Properties.Core.deps.json
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\bin\Debug\net9.0\Properties.Core.dll
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\bin\Debug\net9.0\Properties.Core.pdb
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\Properties.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\Properties.Core.AssemblyInfoInputs.cache
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\Properties.Core.AssemblyInfo.cs
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\Properties.Core.csproj.CoreCompileInputs.cache
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\Properties.Core.sourcelink.json
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\Properties.Core.dll
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\refint\Properties.Core.dll
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\Properties.Core.pdb
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\ref\Properties.Core.dll
+D:\Descargas\Seba\Proyects\C#\PropertiesAPI-MC\PropertiesAPI\src\Properties.Core\obj\Debug\net9.0\Properties.Core.csproj.AssemblyReference.cache

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+
+using System.ComponentModel.DataAnnotations;
 using Properties.Core.Entities;
 using Properties.Core.Interfaces;
 using Properties.Infrastructure.Data;
@@ -12,23 +9,34 @@ namespace Properties.Application.Services
     public class PropertyService : IPropertyService
     {
         private readonly AppDbContext _context;
+        private readonly IEntityValidator<Property> _validator;
 
-        public PropertyService(AppDbContext context)
+        public PropertyService(AppDbContext context, IEntityValidator<Property> validator)
         {
             _context = context;
+            _validator = validator;
         }
 
-        public Task AddPropertyAsync(Property property)
+        public async Task AddPropertyAsync(Property property)
         {
-            _context.Properties.Add(property);
-            return _context.SaveChangesAsync();
+            IEnumerable<string> errors = await _validator.ValidatePropertyAsync(property);
+
+            if (errors.Any())
+            {
+                throw new Exception("Error en la validacion");
+            }
+
+            // Lógica para agregar la propiedad
+            await _context.Properties.AddAsync(property);
+            await _context.SaveChangesAsync();
         }
 
         public Task DeletePropertyAsync(int id)
         {
             var property = _context.Properties.Find(id);
 
-            if (property != null) {
+            if (property != null)
+            {
                 _context.Properties.Remove(property);
                 return _context.SaveChangesAsync();
             }
@@ -36,9 +44,34 @@ namespace Properties.Application.Services
             return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Property>> GetAllPropertiesAsync()
+        public PagedList<Property> GetAllPropertiesAsync(PropertyQueryParams queryParams)
         {
-            return await _context.Properties.ToListAsync();
+            var query = _context.Properties.AsQueryable();
+
+            if (!string.IsNullOrEmpty(queryParams.SearchTerm))
+            {
+                query = query.Where(p => p.Name.Contains(queryParams.SearchTerm) ||
+                                        p.Description.Contains(queryParams.SearchTerm));
+            }
+
+            // Ordenar resultados
+            if (!string.IsNullOrEmpty(queryParams.SortBy))
+            {
+                switch (queryParams.SortBy.ToLower())
+                {
+                    case "price":
+                        query = queryParams.OrderBy ? query.OrderBy(p => p.Price) :
+                                                    query.OrderByDescending(p => p.Price);
+                        break;
+                    default:
+                        query = queryParams.OrderBy ? query.OrderBy(p => p.Id) :
+                                                    query.OrderByDescending(p => p.Id);
+                        break;
+                }
+            }
+
+            // Aplicar paginación
+            return PagedList<Property>.CreateAsync(query, queryParams.PageNumber, queryParams.PageSize);
         }
 
         public async Task<Property> GetPropertyByIdAsync(int id)

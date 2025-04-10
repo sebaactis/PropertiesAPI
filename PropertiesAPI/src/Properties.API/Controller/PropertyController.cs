@@ -18,11 +18,21 @@ namespace Properties.Api.Controllers
 
         // GET: api/properties
         [HttpGet]
-        public async Task<IActionResult> GetAllProperties()
-        {
-            var properties = await _propertyService.GetAllPropertiesAsync();
-            return Ok(properties);
-        }
+            public IActionResult GetAllProperties([FromQuery] PropertyQueryParams queryParams)
+            {
+                var result = _propertyService.GetAllPropertiesAsync(queryParams);
+
+                var response = new
+                {
+                    items = result.Items,
+                    totalCount = result.TotalCount,
+                    pageNumber = result.PageNumber,
+                    pageSize = result.PageSize,
+                    totalPages = result.TotalPages
+                };
+
+                return Ok(response);
+            }
 
         // GET: api/properties/{id}
         [HttpGet("{id}")]

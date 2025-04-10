@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "iA7tvmiKsWE=",
+  "dgSpecHash": "AsfBOJn9v+M=",
   "success": true,
-  "projectFilePath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\PropertiesAPI\\src\\Properties.Core\\Properties.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Seba\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512"
+  ],
   "logs": []
 }
