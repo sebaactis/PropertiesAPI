@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Properties.Core.Entities;
 using Properties.Core.Interfaces;
+using Properties.Core.Models;
+using Properties.Core.Models.DTO;
+using System.Net;
 
 namespace Properties.Api.Controllers
 {
@@ -16,75 +19,188 @@ namespace Properties.Api.Controllers
             _propertyService = propertyService;
         }
 
-        // GET: api/properties
         [HttpGet]
-            public IActionResult GetAllProperties([FromQuery] PropertyQueryParams queryParams)
+        public IActionResult GetAllProperties([FromQuery] PropertyQueryParams queryParams)
+        {
+            try
             {
                 var result = _propertyService.GetAllPropertiesAsync(queryParams);
 
-                var response = new
-                {
-                    items = result.Items,
-                    totalCount = result.TotalCount,
-                    pageNumber = result.PageNumber,
-                    pageSize = result.PageSize,
-                    totalPages = result.TotalPages
-                };
+                var response = ApiResponse<PagedList<Property>>.Success(
+                    method: "GET",
+                    url: "/api/properties",
+                    statusCode: (int)HttpStatusCode.OK,
+                    message: "Data returned successfully",
+                    data: result
+                    );
 
                 return Ok(response);
+
             }
+            catch (Exception error)
+            {
+                var response = ApiResponse<PagedList<Property>>.Error(
+                    method: "GET",
+                    url: "/api/properties",
+                    statusCode: (int)HttpStatusCode.BadRequest,
+                    message: $"Error to try to get the data: {error}"
+                    );
+
+                return BadRequest(response);
+            }
+
+
+        }
 
         // GET: api/properties/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPropertyById(int id)
+        public async Task<IActionResult> GetPropertyById(Guid id)
         {
-            var property = await _propertyService.GetPropertyByIdAsync(id);
-            if (property == null)
+            var result = await _propertyService.GetPropertyByIdAsync(id);
+
+            if (result == null)
             {
-                return NotFound($"Property with ID {id} not found.");
+                var badResponse = ApiResponse<Property>.Error(
+                    method: "GET",
+                    url: "/api/properties",
+                    statusCode: (int)HttpStatusCode.NotFound,
+                    message: "Property not found"
+                    );
+
+                return NotFound(badResponse);
             }
-            return Ok(property);
+
+            var response = ApiResponse<Property>.Success(
+                method: "GET",
+                url: "/api/properties",
+                statusCode: (int)HttpStatusCode.OK,
+                message: "Data returned successfully",
+                data: result
+                );
+
+            return Ok(response);
         }
 
         // POST: api/properties
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AddProperty([FromBody] Property property)
+        public async Task<IActionResult> AddProperty([FromBody] CreatePropertyDTO property)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                var response = ApiResponse<Property>.Error(
+                    method: "POST",
+                    url: "/api/properties",
+                    statusCode: (int)HttpStatusCode.BadRequest,
+                    message: ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage)
+                        .FirstOrDefault() ?? "Invalid data"
+                );
+
+                return BadRequest(response);
             }
 
-            await _propertyService.AddPropertyAsync(property);
-            return CreatedAtAction(nameof(GetPropertyById), new { id = property.Id }, property);
+            try
+            {
+                var result = await _propertyService.AddPropertyAsync(property);
+
+                if (!result.Success)
+                {
+                    var errorResponse = ApiResponse<Property>.Error(
+                        method: "POST",
+                        url: "/api/properties",
+                        statusCode: (int)HttpStatusCode.BadRequest,
+                        message: "Error creating the property"
+                    );
+
+                    return BadRequest(errorResponse);
+                }
+
+                var successResponse = ApiResponse<Property>.Success(
+                    method: "POST",
+                    url: "/api/properties",
+                    statusCode: (int)HttpStatusCode.Created,
+                    message: "Property created successfully",
+                    data: result.Property
+                );
+
+                return CreatedAtAction(nameof(GetPropertyById), new { id = result.Property.Id }, successResponse);
+            }
+            catch (Exception error)
+            {
+                var errorResponse = ApiResponse<Property>.Error(
+                    method: "POST",
+                    url: "/api/properties",
+                    statusCode: (int)HttpStatusCode.InternalServerError,
+                    message: $"An unexpected error occurred: {error.Message}"
+                );
+
+                return StatusCode((int)HttpStatusCode.InternalServerError, errorResponse);
+            }
+
+
         }
 
         // PUT: api/properties/{id}
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> UpdateProperty(int id, [FromBody] Property property)
+        public async Task<IActionResult> UpdateProperty(Guid id, [FromBody] UpdatePropertyDTO propertyDto)
         {
-            if (id != property.Id)
-            {
-                return BadRequest("ID mismatch.");
-            }
-
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                var response = ApiResponse<Property>.Error(
+                    method: "PUT",
+                    url: "/api/properties",
+                    statusCode: (int)HttpStatusCode.BadRequest,
+                    message: ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage)
+                        .FirstOrDefault() ?? "Invalid data"
+                );
+
+                return BadRequest(response);
             }
 
-            await _propertyService.UpdatePropertyAsync(property);
-            return NoContent();
+            var result = await _propertyService.UpdatePropertyAsync(id, propertyDto);
+
+            var successResponse = ApiResponse<Property>.Success(
+                    method: "POST",
+                    url: "/api/properties",
+                    statusCode: (int)HttpStatusCode.Created,
+                    message: "Property created successfully",
+                    data: result.Property
+                );
+
+            return Ok(successResponse);
         }
 
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteProperty(int id)
+        public async Task<IActionResult> DeleteProperty(Guid id)
         {
-            await _propertyService.DeletePropertyAsync(id);
-            return NoContent();
+            var deletedProperty = await _propertyService.DeletePropertyAsync(id);
+
+            if (deletedProperty == null)
+            {
+                var errorResponse = ApiResponse<Property>.Error(
+                    method: "DELETE",
+                    url: $"/api/properties/{id}",
+                    statusCode: (int)HttpStatusCode.NotFound,
+                    message: "Property not found"
+                );
+
+                return NotFound(errorResponse);
+            }
+
+            var successResponse = ApiResponse<Property>.Success(
+                data: deletedProperty,
+                method: "DELETE",
+                url: $"/api/properties/{id}",
+                statusCode: (int)HttpStatusCode.OK
+            );
+
+            return Ok(successResponse);
         }
     }
 }

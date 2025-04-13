@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Properties.Core.Models;
 
 namespace Properties.API.Middlewares
 {
@@ -48,33 +46,28 @@ namespace Properties.API.Middlewares
                 }
                 catch (SecurityTokenExpiredException)
                 {
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsync("Token expired.");
+                    await WriteErrorResponse(context, "Token expired.", StatusCodes.Status401Unauthorized);
                     return;
                 }
                 catch (SecurityTokenInvalidIssuerException)
                 {
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsync("Invalid token issuer.");
+                    await WriteErrorResponse(context, "Invalid token issuer.", StatusCodes.Status401Unauthorized);
                     return;
                 }
                 catch (SecurityTokenInvalidAudienceException)
                 {
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsync("Invalid token audience.");
+                    await WriteErrorResponse(context, "Invalid token audience.", StatusCodes.Status401Unauthorized);
                     return;
                 }
                 catch (Exception)
                 {
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsync("Invalid token.");
+                    await WriteErrorResponse(context, "Invalid token.", StatusCodes.Status401Unauthorized);
                     return;
                 }
             }
             else
             {
-                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await context.Response.WriteAsync("Missing or invalid token.");
+                await WriteErrorResponse(context, "Missing or invalid token.", StatusCodes.Status401Unauthorized);
                 return;
             }
 
@@ -109,6 +102,21 @@ namespace Properties.API.Middlewares
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             }, out SecurityToken validatedToken);
+        }
+
+        private async Task WriteErrorResponse(HttpContext context, string message, int statusCode)
+        {
+            var response = ApiResponse<string>.Error(
+                method: context.Request.Method,
+                url: context.Request.Path,
+                statusCode: statusCode,
+                message: message
+            );
+
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = statusCode;
+
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
         }
 
     }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XVaw7+FP+80=",
+  "dgSpecHash": "PAyFYLL5fBw=",
   "success": true,
-  "projectFilePath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\Gateway\\src\\Gateway\\Gateway.csproj",
+  "projectFilePath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\Gateway\\src\\Gateway\\Gateway.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Seba\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
     "C:\\Users\\Seba\\.nuget\\packages\\ipaddressrange\\6.1.0\\ipaddressrange.6.1.0.nupkg.sha512",

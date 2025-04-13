@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OCaZy04h+iA=",
+  "dgSpecHash": "SeyCljFNcd4=",
   "success": true,
-  "projectFilePath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\AuthService\\src\\AuthService\\AuthService.csproj",
+  "projectFilePath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\AuthService\\src\\AuthService\\AuthService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Seba\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Seba\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\9.0.3\\microsoft.aspnetcore.authentication.jwtbearer.9.0.3.nupkg.sha512",

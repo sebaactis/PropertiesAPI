@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Properties.API.Middlewares;
+using Properties.Application.Mapping;
 using Properties.Application.Services;
 using Properties.Core.Entities;
 using Properties.Core.Interfaces;
@@ -25,7 +26,6 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddScoped<IEntityValidator<Property>, PropertyValidator>();
-
 
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 

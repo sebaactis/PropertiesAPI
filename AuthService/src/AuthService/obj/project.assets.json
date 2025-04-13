@@ -7930,11 +7930,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\AuthService\\src\\AuthService\\AuthService.csproj",
+      "projectUniqueName": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\AuthService\\src\\AuthService\\AuthService.csproj",
       "projectName": "AuthService",
-      "projectPath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\AuthService\\src\\AuthService\\AuthService.csproj",
+      "projectPath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\AuthService\\src\\AuthService\\AuthService.csproj",
       "packagesPath": "C:\\Users\\Seba\\.nuget\\packages\\",
-      "outputPath": "D:\\Descargas\\Seba\\Proyects\\C#\\MicroserviceProyect\\AuthService\\src\\AuthService\\obj\\",
+      "outputPath": "D:\\Descargas\\Seba\\Proyects\\C#\\PropertiesAPI-MC\\AuthService\\src\\AuthService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

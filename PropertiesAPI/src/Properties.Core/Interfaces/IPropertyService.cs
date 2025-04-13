@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Properties.Core.Entities;
+using Properties.Core.Models.DTO;
 
 namespace Properties.Core.Interfaces
 {
     public interface IPropertyService
     {
         PagedList<Property> GetAllPropertiesAsync(PropertyQueryParams queryParams);
-        Task<Property> GetPropertyByIdAsync(int id);
-        Task AddPropertyAsync(Property property);
-        Task UpdatePropertyAsync(Property property);
-        Task DeletePropertyAsync(int id);
+        Task<Property?> GetPropertyByIdAsync(Guid id);
+        Task<(bool Success, Property? Property, IEnumerable<string>? Errors)> AddPropertyAsync(CreatePropertyDTO property);
+        Task<(bool Success, Property? Property, IEnumerable<string>? Errors)> UpdatePropertyAsync(Guid id, UpdatePropertyDTO property);
+        Task<Property?> DeletePropertyAsync(Guid id);
     }
 }

@@ -1,7 +1,8 @@
 
-using System.ComponentModel.DataAnnotations;
+using Properties.Application.Mapping;
 using Properties.Core.Entities;
 using Properties.Core.Interfaces;
+using Properties.Core.Models.DTO;
 using Properties.Infrastructure.Data;
 
 namespace Properties.Application.Services
@@ -17,31 +18,37 @@ namespace Properties.Application.Services
             _validator = validator;
         }
 
-        public async Task AddPropertyAsync(Property property)
+        public async Task<(bool Success, Property? Property, IEnumerable<string>? Errors)> AddPropertyAsync(CreatePropertyDTO propertyDTO)
         {
+
+            Property property = PropertyMapper.MapToPropertyCreate(propertyDTO);
+
             IEnumerable<string> errors = await _validator.ValidatePropertyAsync(property);
 
             if (errors.Any())
             {
-                throw new Exception("Error en la validacion");
+                return (false, null, errors);
             }
 
-            // Lógica para agregar la propiedad
             await _context.Properties.AddAsync(property);
             await _context.SaveChangesAsync();
+
+            return (true, property, null);
+
         }
 
-        public Task DeletePropertyAsync(int id)
+        public async Task<Property?> DeletePropertyAsync(Guid id)
         {
-            var property = _context.Properties.Find(id);
+            var property = await _context.Properties.FindAsync(id);
 
             if (property != null)
             {
                 _context.Properties.Remove(property);
-                return _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                return property;
             }
 
-            return Task.CompletedTask;
+            return null;
         }
 
         public PagedList<Property> GetAllPropertiesAsync(PropertyQueryParams queryParams)
@@ -74,15 +81,33 @@ namespace Properties.Application.Services
             return PagedList<Property>.CreateAsync(query, queryParams.PageNumber, queryParams.PageSize);
         }
 
-        public async Task<Property> GetPropertyByIdAsync(int id)
+        public async Task<Property?> GetPropertyByIdAsync(Guid id)
         {
             return await _context.Properties.FindAsync(id);
         }
 
-        public async Task UpdatePropertyAsync(Property property)
+        public async Task<(bool Success, Property? Property, IEnumerable<string>? Errors)> UpdatePropertyAsync(Guid id, UpdatePropertyDTO updatePropertyDTO)
         {
-            _context.Properties.Update(property);
+            Property property = await GetPropertyByIdAsync(id);
+
+            if(property == null)
+            {
+                throw new ArgumentNullException("The property doesnt exists");
+            }
+
+            Property propertyMap = PropertyMapper.MapToPropertyUpdate(property, updatePropertyDTO);
+
+            IEnumerable<string> errors = await _validator.ValidatePropertyAsync(propertyMap);
+
+            if (errors.Any())
+            {
+                return (false, null, errors);
+            }
+
+            _context.Properties.Update(propertyMap);
             await _context.SaveChangesAsync();
+
+            return (true, property, null);
         }
     }
 }
